@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Shreya ❤️</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+overflow:hidden;
+background:black;
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:0;
+}
+
+#countdown{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:120px;
+font-weight:bold;
+color:#ffd1ea;
+z-index:10;
+text-shadow:0 0 30px pink;
+}
+
+#letterBox{
+display:none;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+z-index:20;
+}
+
+.envelope{
+width:320px;
+height:220px;
+background:white;
+border-radius:15px;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:70px;
+animation:pop 1.5s ease forwards;
+}
+
+.card{
+display:none;
+width:350px;
+background:#fff6e7;
+padding:25px;
+border-radius:20px;
+box-shadow:0 0 40px rgba(255,255,255,.5);
+text-align:center;
+animation:openCard 2s forwards;
+}
+
+.card h1{
+color:#b76c40;
+margin-bottom:15px;
+}
+
+.card p{
+line-height:1.8;
+color:#444;
+}
+
+.heart{
+font-size:50px;
+color:pink;
+animation:pulse 1s infinite;
+margin-bottom:15px;
+}
+
+@keyframes pulse{
+50%{transform:scale(1.2);}
+}
+
+@keyframes pop{
+from{
+transform:scale(0);
+}
+to{
+transform:scale(1);
+}
+}
+
+@keyframes openCard{
+from{
+transform:scale(.5);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+</style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div id="countdown">3</div>
+
+<div id="letterBox">
+
+<div class="envelope" id="envelope">
+💌
+</div>
+
+<div class="card" id="card">
+
+<div class="heart">❤️</div>
+
+<h1>Happy Birthday Shreya 🎂</h1>
+
+<p>
+Happy Birthday My Love ❤️<br><br>
+
+May your smile shine brighter than the stars
+and may every dream come true.
+
+Thank you for making life beautiful.
+Stay happy, stay blessed and keep smiling.
+
+I Love You ❤️
+</p>
+
+</div>
+
+</div>
+
+<script>
+const canvas=document.getElementById("matrix");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+const letters="HAPPYBIRTHDAYLOVE❤️";
+const size=14;
+const columns=canvas.width/size;
+const drops=[];
+
+for(let x=0;x<columns;x++){
+drops[x]=1;
+}
+
+function draw(){
+ctx.fillStyle="rgba(0,0,0,0.08)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="#ff4da6";
+ctx.font=size+"px monospace";
+
+for(let i=0;i<drops.length;i++){
+
+const text=
+letters[Math.floor(
+Math.random()*letters.length
+)];
+
+ctx.fillText(
+text,
+i*size,
+drops[i]*size
+);
+
+if(
+drops[i]*size>canvas.height &&
+Math.random()>0.97
+){
+drops[i]=0;
+}
+
+drops[i]++;
+}
+}
+
+setInterval(draw,35);
+
+let count=3;
+const countdown=document.getElementById("countdown");
+
+const timer=setInterval(()=>{
+
+count--;
+
+if(count>0){
+
+countdown.innerHTML=count;
+
+}else if(count===0){
+
+countdown.innerHTML="Happy Birthday";
+
+}else if(count===-1){
+
+countdown.innerHTML="❤️";
+
+}else{
+
+clearInterval(timer);
+
+countdown.style.display="none";
+
+document.getElementById(
+"letterBox"
+).style.display="block";
+
+setTimeout(()=>{
+
+document.getElementById(
+"envelope"
+).style.display="none";
+
+document.getElementById(
+"card"
+).style.display="block";
+
+},2500);
+
+}
+
+},2000);
+
+canvas.addEventListener("click",()=>{
+for(let i=0;i<50;i++){
+
+ctx.fillStyle="white";
+
+ctx.beginPath();
+
+ctx.arc(
+Math.random()*canvas.width,
+Math.random()*canvas.height,
+Math.random()*3,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+}
+});
+</script>
+
+</body>
+</html>
